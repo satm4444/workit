@@ -2,6 +2,7 @@ import 'package:Workit/models/work.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 import 'package:timeago/timeago.dart' as timeago;
 //import 'package:jiffy/jiffy.dart';
@@ -16,12 +17,12 @@ class BigCard extends StatefulWidget {
 class _BigCardState extends State<BigCard> {
   @override
   Widget build(BuildContext context) {
-    final fromModel = Provider.of<Work>(context, listen: false);
+    final fromModel = Provider.of<Work>(context);
 
     var mediaWidth = MediaQuery.of(context).size.width;
 
-    final now = new DateTime.now();
-    final difference = now.difference(fromModel.dateTime);
+    //  final now = new DateTime.now();
+    //  final difference = now.difference(fromModel.dateTime);
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, '/work_detail_screen',
@@ -87,7 +88,9 @@ class _BigCardState extends State<BigCard> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(right: 12.0),
-                        child: Text(timeago.format(now.subtract(difference)),
+                        child: Text(
+                            DateFormat.yMMMMEEEEd().format(fromModel.dateTime),
+                            //Text(timeago.format(now.subtract(difference)),
                             //timeago.format(fromModel.dateTime),
                             //Jiffy(fromModel.dateTime).fromNow(),
 
@@ -183,7 +186,7 @@ class _BigCardState extends State<BigCard> {
                             width: mediaWidth * 0.5,
                             // color: Colors.green,
                             // color: Colors.teal,
-                            child: Text(fromModel.contact,
+                            child: Text(fromModel.contact.toStringAsFixed(0),
                                 overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.lato(
                                   fontSize: 16,

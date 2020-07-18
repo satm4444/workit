@@ -1,6 +1,8 @@
+import 'package:Workit/providers/auth_provider.dart';
 import 'package:Workit/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class KaamChaDrawer extends StatelessWidget {
   @override
@@ -123,9 +125,10 @@ class KaamChaDrawer extends StatelessWidget {
                 fontWeight: FontWeight.w400,
               ),
             ),
-            onTap: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => WelcomeScreen()));
+            onTap: () async {
+              Navigator.of(context).pop();
+              await Provider.of<Auth>(context, listen: false).logout();
+              Navigator.pushReplacementNamed(context, '/welcome_screen');
             },
           ),
         ],

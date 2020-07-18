@@ -1,9 +1,80 @@
+import 'package:Workit/http_exception.dart';
+import 'package:Workit/providers/auth_provider.dart';
 import 'package:Workit/screens/login_screen.dart';
-import 'package:Workit/screens/welcome_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
-class SignupScreen extends StatelessWidget {
+class SignupScreen extends StatefulWidget {
+  @override
+  _SignupScreenState createState() => _SignupScreenState();
+}
+
+class _SignupScreenState extends State<SignupScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey();
+  var _isLoading = false;
+  Map<String, String> _authData = {
+    'email': '',
+    'password': '',
+  };
+
+  void _showErrorDialog(String errorMessage) {
+    showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+              title: Text('An Error Occurred!'),
+              content: Text(errorMessage),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('Okay'),
+                  onPressed: () {
+                    Navigator.of(ctx).pop();
+                  },
+                )
+              ],
+            ));
+  }
+
+  Future<void> _submit() async {
+    if (!_formKey.currentState.validate()) {
+      // Invalid!
+      return;
+    }
+    _formKey.currentState.save();
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      // Log user in
+      await Provider.of<Auth>(context, listen: false)
+          .signUp(_authData["email"], _authData["password"]);
+
+      Navigator.pushReplacementNamed(context, '/login_screen');
+    } on HttpException catch (error) {
+      var errorMessage = "Authenication failed";
+      if (error.toString().contains("EMAIL_EXITS")) {
+        errorMessage = 'This email address is already in use.';
+      } else if (error.toString().contains("INVALID_EMAIL")) {
+        errorMessage = 'This is not a valid email address.';
+      } else if (error.toString().contains("WEAK_PASSWORD")) {
+        errorMessage = 'This password is too weak.';
+      } else if (error.toString().contains("EMAIL_NOT_FOUND")) {
+        errorMessage = 'Could not find a user with that email.';
+      } else if (error.toString().contains("INVALID_PASSWORD")) {
+        errorMessage = 'Invalid password.';
+      }
+      _showErrorDialog(errorMessage);
+    } catch (error) {
+      const errorMessage =
+          "Could not authenticate you. Please try again later!";
+      _showErrorDialog(errorMessage);
+    }
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var deviceSize = MediaQuery.of(context).size;
@@ -63,19 +134,9 @@ class SignupScreen extends StatelessWidget {
                     //   color: Colors.red,
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Form(
+                      key: _formKey,
                       child: Column(
                         children: <Widget>[
-                          TextFormField(
-                            decoration: InputDecoration(
-                                fillColor: Colors.green,
-                                labelText: "Enter your username",
-                                labelStyle: TextStyle(color: Colors.green),
-                                hintText: "eg: donesaho"),
-                            keyboardType: TextInputType.text,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
                           TextFormField(
                             decoration: InputDecoration(
                                 fillColor: Colors.green,
@@ -83,6 +144,14 @@ class SignupScreen extends StatelessWidget {
                                 labelStyle: TextStyle(color: Colors.green),
                                 hintText: "eg: abc@gmail.com"),
                             keyboardType: TextInputType.emailAddress,
+                            validator: (value) {
+                              if (value.isEmpty || !value.contains('@')) {
+                                return 'Invalid email!';
+                              }
+                            },
+                            onSaved: (value) {
+                              _authData['email'] = value;
+                            },
                           ),
                           SizedBox(
                             height: 10,
@@ -90,42 +159,47 @@ class SignupScreen extends StatelessWidget {
                           TextFormField(
                             decoration: InputDecoration(
                               fillColor: Colors.green,
-                              labelText: "Enter your Password",
+                              labelText: "Setup your Password",
                               labelStyle: TextStyle(color: Colors.green),
                             ),
-                            keyboardType: TextInputType.emailAddress,
+                            validator: (value) {
+                              if (value.isEmpty || value.length < 5) {
+                                return 'Password is too short!';
+                              }
+                            },
+                            onSaved: (value) {
+                              _authData['password'] = value;
+                            },
                             obscureText: true,
                           ),
                           SizedBox(
                             height: 50,
                           ),
-                          Container(
-                            height: deviceSize.height * 0.08,
-                            width: deviceSize.width * 0.8,
-                            decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            child: FlatButton(
-                              shape: RoundedRectangleBorder(
+                          if (_isLoading)
+                            CircularProgressIndicator()
+                          else
+                            Container(
+                              height: deviceSize.height * 0.08,
+                              width: deviceSize.width * 0.8,
+                              decoration: BoxDecoration(
+                                color: Colors.green,
                                 borderRadius: BorderRadius.circular(30),
                               ),
-                              onPressed: () {
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => WelcomeScreen()));
-                              },
-                              child: Text(
-                                "SignUp",
-                                style: GoogleFonts.nunito(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white,
+                              child: FlatButton(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                onPressed: _submit,
+                                child: Text(
+                                  "SignUp",
+                                  style: GoogleFonts.nunito(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
                           SizedBox(
                             height: 10,
                           ),

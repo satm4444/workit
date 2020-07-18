@@ -7,8 +7,7 @@ import 'package:provider/provider.dart';
 class ListBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final fromProvider =
-        Provider.of<WorkProvider>(context, listen: false).items;
+    final fromProvider = Provider.of<WorkProvider>(context).items;
     return ListView.builder(
       itemBuilder: (ctx, index) => ChangeNotifierProvider.value(
         value: fromProvider[index],

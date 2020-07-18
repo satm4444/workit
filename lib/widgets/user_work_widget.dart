@@ -1,6 +1,8 @@
+import 'package:Workit/providers/work_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class UserWorkWidget extends StatelessWidget {
   final String id;
@@ -10,6 +12,7 @@ class UserWorkWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scaffold = Scaffold.of(context);
     // var deviceSize = MediaQuery.of(context).size;
     return Column(
       children: <Widget>[
@@ -54,7 +57,16 @@ class UserWorkWidget extends StatelessWidget {
                     //CupertinoIcons.delete,
                     color: Colors.red,
                   ),
-                  onPressed: () {},
+                  onPressed: () async {
+                    try {
+                      await Provider.of<WorkProvider>(context, listen: false)
+                          .deleteWork(id);
+                    } catch (error) {
+                      scaffold.showSnackBar(SnackBar(
+                        content: Text(error.message),
+                      ));
+                    }
+                  },
                 )
               ],
             ),

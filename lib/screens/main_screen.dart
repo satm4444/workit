@@ -18,7 +18,6 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void didChangeDependencies() {
-    super.didChangeDependencies();
     if (_isInit) {
       setState(() {
         _isLoading = true;
@@ -31,7 +30,9 @@ class _MainScreenState extends State<MainScreen> {
         });
       });
     }
-    _isInit = false;
+
+    _isInit = true;
+    super.didChangeDependencies();
   }
 
   Widget navBar(context) {

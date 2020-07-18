@@ -6,7 +6,7 @@ class Work with ChangeNotifier {
   final String username;
 
   final String workDetail;
-  final String contact;
+  final double contact;
   final String location;
   final double pay;
   final DateTime dateTime;
