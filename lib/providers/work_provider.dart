@@ -56,13 +56,13 @@ class WorkProvider with ChangeNotifier {
   //this function fetches the products from firebase
   Future<void> fetchAndSetWorks([bool filterByUser = false]) async {
     final filterString =
-        filterByUser ? 'workBy="creatorId"&equalTo="$_userId"' : "";
+        filterByUser ? 'orderBy="creatorId"&equalTo="$_userId"' : "";
     final url =
         "https://workit-7b553.firebaseio.com/works.json?auth=$_authToken&$filterString";
     try {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
-
+      print(extractedData);
       final List<Work> loadedWorks = [];
       extractedData.forEach((prodId, work) {
         loadedWorks.add(Work(
@@ -70,7 +70,7 @@ class WorkProvider with ChangeNotifier {
           worktype: work["worktype"],
           username: work["username"],
           workDetail: work["workDetail"],
-          contact: double.parse(work['contact'].toString()),
+          contact: work['contact'],
           location: work["location"],
           pay: double.parse(work['pay'].toString()),
           dateTime: DateTime.now(),
@@ -124,5 +124,17 @@ class WorkProvider with ChangeNotifier {
         existingWork = null;
       }
     } catch (error) {}
+  }
+
+  // get search list
+  List<Work> getSearchItems(String query) {
+    if (query.isNotEmpty && query != null) {
+      notifyListeners();
+      return _items
+          .where((prod) => prod.worktype.toLowerCase().startsWith(query))
+          .toList();
+    }
+    notifyListeners();
+    return [];
   }
 }

@@ -21,7 +21,7 @@ class _EditscreenState extends State<Editscreen> {
     worktype: "",
     username: "",
     workDetail: "",
-    contact: 0,
+    contact: "",
     location: "",
     pay: 0,
   );
@@ -54,9 +54,9 @@ class _EditscreenState extends State<Editscreen> {
           "worktype": _editWork.worktype,
           "username": _editWork.username,
           "workDetail": _editWork.workDetail,
-          "contact": _editWork.contact.toStringAsFixed(0),
+          "contact": _editWork.contact,
           "location": _editWork.location,
-          "pay": _editWork.pay.toStringAsFixed(0),
+          "pay": _editWork.pay.toString(),
         };
       }
     }
@@ -342,7 +342,7 @@ class _EditscreenState extends State<Editscreen> {
                                   worktype: _editWork.worktype,
                                   username: _editWork.username,
                                   workDetail: _editWork.workDetail,
-                                  contact: double.parse(value),
+                                  contact: value,
                                   location: _editWork.location,
                                   pay: _editWork.pay,
                                 );

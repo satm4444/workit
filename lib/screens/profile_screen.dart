@@ -1,7 +1,7 @@
 import 'package:Workit/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -27,22 +27,22 @@ class ProfileScreen extends StatelessWidget {
                           onPressed: () {
                             Navigator.of(context).pop();
                           }),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 3.0),
-                        child: Text(
-                          "My Profile",
-                          style: GoogleFonts.roboto(
-                            fontSize: 26,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(top: 3.0),
+                      //   child: Text(
+                      //     "My Profile",
+                      //     style: GoogleFonts.roboto(
+                      //       fontSize: 26,
+                      //       color: Colors.black,
+                      //       fontWeight: FontWeight.w700,
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
               ),
-              Divider(),
+              //  Divider(),
               // SizedBox(
               //   height: 10,
               // ),
@@ -61,7 +61,7 @@ class ProfileScreen extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         Container(
-                          child: Image.asset("assets/icons/smile.png",
+                          child: Image.asset("assets/icons/workprofile.png",
                               fit: BoxFit.cover),
                           height: 198,
                           width: deviceSize.width * 0.36,
@@ -136,48 +136,48 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 15),
                         Container(
-                          height: 130,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: shadowList,
-                          ),
+                          height: 175,
+                          // decoration: BoxDecoration(
+                          //   color: Colors.white,
+                          //   boxShadow: shadowList,
+                          // ),
                           width: deviceSize.width * 0.36,
-                          child: Column(
-                            children: <Widget>[
-                              SizedBox(height: 20),
-                              Container(
-                                height: 60,
-                                //  color: Colors.red,
-                                child: SvgPicture.asset(
-                                    "assets/icons/placeholder.svg"),
-                              ),
-                              Container(
-                                height: 40,
-                                // color: Colors.red,
-                                child: Center(
-                                  child: Text(
-                                    "My Location",
-                                    style: GoogleFonts.ubuntu(
-                                      fontSize: 17,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: 10),
-                            ],
-                          ),
+                          // child: Column(
+                          //   children: <Widget>[
+                          //     SizedBox(height: 20),
+                          //     Container(
+                          //       height: 60,
+                          //       //  color: Colors.red,
+                          //       // child: SvgPicture.asset(
+                          //       //   "assets/icons/placeholder.svg"),
+                          //     ),
+                          //     Container(
+                          //       height: 40,
+                          //       // color: Colors.red,
+                          //       child: Center(
+                          //           // child: Text(
+                          //           //   "My Location",
+                          //           //   style: GoogleFonts.ubuntu(
+                          //           //     fontSize: 17,
+                          //           //     color: Colors.black,
+                          //           //     fontWeight: FontWeight.w700,
+                          //           //   ),
+                          //           // ),
+                          //           ),
+                          //     ),
+                          //     SizedBox(height: 10),
+                          //   ],
+                          // ),
                         ),
-                        SizedBox(height: 15),
-                        Container(
-                          height: 30,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: shadowList,
-                          ),
-                          width: deviceSize.width * 0.36,
-                        ),
+                        // SizedBox(height: 15),
+                        // Container(
+                        //   height: 30,
+                        //   decoration: BoxDecoration(
+                        //     color: Colors.white,
+                        //     boxShadow: shadowList,
+                        //   ),
+                        //   width: deviceSize.width * 0.36,
+                        // ),
                       ],
                     ),
                   ),
@@ -195,7 +195,7 @@ class ProfileScreen extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: Text(
-                                "Done Saho",
+                                "My Profile",
                                 style: GoogleFonts.roboto(
                                     fontSize: 21, fontWeight: FontWeight.bold),
                               ),

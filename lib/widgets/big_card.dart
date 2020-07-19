@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-import 'package:timeago/timeago.dart' as timeago;
+//import 'package:timeago/timeago.dart' as timeago;
 //import 'package:jiffy/jiffy.dart';
 
 import 'package:provider/provider.dart';
@@ -186,7 +186,7 @@ class _BigCardState extends State<BigCard> {
                             width: mediaWidth * 0.5,
                             // color: Colors.green,
                             // color: Colors.teal,
-                            child: Text(fromModel.contact.toStringAsFixed(0),
+                            child: Text(fromModel.contact,
                                 overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.lato(
                                   fontSize: 16,
@@ -325,7 +325,7 @@ class _BigCardState extends State<BigCard> {
                                 width: 5,
                               ),
                               Text(
-                                fromModel.pay.toStringAsFixed(0),
+                                fromModel.pay.toString(),
                                 // overflow: TextOverflow.ellipsis,
 
                                 style: GoogleFonts.ubuntu(

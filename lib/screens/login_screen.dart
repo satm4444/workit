@@ -149,6 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               if (value.isEmpty || !value.contains('@')) {
                                 return 'Invalid email!';
                               }
+                              return null;
                             },
                             onSaved: (value) {
                               _authData['email'] = value;
@@ -168,6 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               if (value.isEmpty || value.length < 5) {
                                 return 'Password is too short!';
                               }
+                              return null;
                             },
                             onSaved: (value) {
                               _authData['password'] = value;

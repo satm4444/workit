@@ -1,4 +1,5 @@
 import 'package:Workit/providers/work_provider.dart';
+import 'package:Workit/widgets/custom_search_delegate.dart';
 import 'package:Workit/widgets/drawer.dart';
 import 'package:Workit/widgets/list_builder.dart';
 import 'package:flutter/material.dart';
@@ -31,60 +32,8 @@ class _MainScreenState extends State<MainScreen> {
       });
     }
 
-    _isInit = true;
+    _isInit = false;
     super.didChangeDependencies();
-  }
-
-  Widget navBar(context) {
-    return PreferredSize(
-      preferredSize: Size.fromHeight(60.0),
-      child: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.only(right: 10),
-          child: IconButton(
-              icon: SvgPicture.asset("assets/icons/menu.svg"),
-              onPressed: () {
-                _scaffoldKey.currentState.openDrawer();
-              }),
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: SvgPicture.asset("assets/icons/search.svg"),
-            onPressed: () {},
-          ),
-        ],
-        elevation: 0,
-        title: RichText(
-          text: TextSpan(
-            //style: TextStyle(color: Colors.black, fontSize: 36),
-            children: <TextSpan>[
-              TextSpan(
-                  text: 'Work',
-                  style: GoogleFonts.rubik(
-                    color: Color(0xff00C484),
-                    fontSize: 27,
-                    //  letterSpacing: 2,
-                    //  fontFamily: "Menlo",
-                    fontWeight: FontWeight.w600,
-                  )),
-              TextSpan(
-                text: 'it',
-                style: GoogleFonts.ubuntu(
-                  textStyle: TextStyle(
-                    color: Color(0xff2F2F2F),
-                    fontSize: 27,
-                    //letterSpacing: 2,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        backgroundColor: Color(0xffF3F3F3),
-        centerTitle: true,
-      ),
-    );
   }
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
@@ -108,7 +57,57 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
       backgroundColor: Color(0xffF3F3F3),
-      appBar: navBar(context),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(60.0),
+        child: AppBar(
+          leading: Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: IconButton(
+                icon: SvgPicture.asset("assets/icons/menu.svg"),
+                onPressed: () {
+                  _scaffoldKey.currentState.openDrawer();
+                }),
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: SvgPicture.asset("assets/icons/search.svg"),
+              onPressed: () {
+                showSearch(context: context, delegate: CustomSearchDelegate());
+              },
+            ),
+          ],
+          elevation: 0,
+          title: RichText(
+            text: TextSpan(
+              //style: TextStyle(color: Colors.black, fontSize: 36),
+              children: <TextSpan>[
+                TextSpan(
+                    text: 'Work',
+                    style: GoogleFonts.rubik(
+                      color: Color(0xff00C484),
+                      fontSize: 27,
+                      //  letterSpacing: 2,
+                      //  fontFamily: "Menlo",
+                      fontWeight: FontWeight.w600,
+                    )),
+                TextSpan(
+                  text: 'it',
+                  style: GoogleFonts.ubuntu(
+                    textStyle: TextStyle(
+                      color: Color(0xff2F2F2F),
+                      fontSize: 27,
+                      //letterSpacing: 2,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          backgroundColor: Color(0xffF3F3F3),
+          centerTitle: true,
+        ),
+      ),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(

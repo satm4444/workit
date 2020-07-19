@@ -5,13 +5,23 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
+//import 'package:url_launcher/url_launcher.dart';
 
 class WorkDetailScreen extends StatelessWidget {
+//  Future<void> _makePhoneCall(String url) async {
+//    if (await canLaunch(url)) {
+//      await launch(url);
+//    } else {
+//      throw 'Could not launch $url';
+//    }
+//  }
+
   @override
   Widget build(BuildContext context) {
     final data = ModalRoute.of(context).settings.arguments as String;
-    final fromProvider = Provider.of<WorkProvider>(context).findById(data);
-
+    final fromProvider =
+        Provider.of<WorkProvider>(context, listen: false).findById(data);
+    // final contact = fromProvider.contact;
     var size = MediaQuery.of(context).size;
     return Scaffold(
         backgroundColor: Colors.white,
@@ -229,7 +239,7 @@ class WorkDetailScreen extends StatelessWidget {
                               width: 5,
                             ),
                             Text(
-                              fromProvider.pay.toStringAsFixed(0),
+                              fromProvider.pay.toString(),
                               // overflow: TextOverflow.ellipsis,
 
                               style: GoogleFonts.ubuntu(
@@ -297,7 +307,10 @@ class WorkDetailScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 20),
                       FlatButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          //  _makePhoneCall('tel:$contact');
+                          // Navigator.of(context).pop();
+                        },
                         icon: Icon(
                           CupertinoIcons.phone_solid,
                           color: Colors.white70,
