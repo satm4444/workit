@@ -9,32 +9,36 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
+  Future<void> _refreshWorks(BuildContext context) async {
+    await Provider.of<WorkProvider>(context, listen: false)
+        .fetchAndSetWorks(false);
+  }
+
   @override
   _MainScreenState createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
-  bool _isInit = true;
   bool _isLoading = false;
 
-  @override
-  void didChangeDependencies() {
-    if (_isInit) {
-      setState(() {
-        _isLoading = true;
-      });
-      Provider.of<WorkProvider>(context, listen: false)
-          .fetchAndSetWorks()
-          .then((_) {
-        setState(() {
-          _isLoading = false;
-        });
-      });
-    }
+  // @override
+  // void didChangeDependencies() {
+  //   if (_isInit) {
+  //     setState(() {
+  //       _isLoading = true;
+  //     });
+  //     Provider.of<WorkProvider>(context, listen: false)
+  //         .fetchAndSetWorks()
+  //         .then((_) {
+  //       setState(() {
+  //         _isLoading = false;
+  //       });
+  //     });
+  //   }
 
-    _isInit = false;
-    super.didChangeDependencies();
-  }
+  //   _isInit = false;
+  //   super.didChangeDependencies();
+  // }
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
@@ -108,18 +112,47 @@ class _MainScreenState extends State<MainScreen> {
           centerTitle: true,
         ),
       ),
-      body: _isLoading
-          ? Center(
-              child: CircularProgressIndicator(
-                valueColor: new AlwaysStoppedAnimation<Color>(Colors.green),
-              ),
-            )
-          : Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              //  color: Colors.teal,
-              child: ListBuilder(),
-            ),
+      body: FutureBuilder(
+          future: widget._refreshWorks(context),
+          builder: (ctx, snapshot) {
+            return snapshot.connectionState == ConnectionState.waiting
+                ? Center(
+                    child: CircularProgressIndicator(
+                      valueColor:
+                          new AlwaysStoppedAnimation<Color>(Colors.green),
+                    ),
+                  )
+                : RefreshIndicator(
+                    color: Colors.green,
+                    onRefresh: () => widget._refreshWorks(context),
+                    child: _isLoading
+                        ? Center(
+                            child: CircularProgressIndicator(
+                              valueColor: new AlwaysStoppedAnimation<Color>(
+                                  Colors.green),
+                            ),
+                          )
+                        : Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height,
+                            //  color: Colors.teal,
+                            child: ListBuilder(),
+                          ),
+                  );
+          }),
+
+      // _isLoading
+      //     ? Center(
+      //         child: CircularProgressIndicator(
+      //           valueColor: new AlwaysStoppedAnimation<Color>(Colors.green),
+      //         ),
+      //       )
+      //     : Container(
+      //         width: MediaQuery.of(context).size.width,
+      //         height: MediaQuery.of(context).size.height,
+      //         //  color: Colors.teal,
+      //         child: ListBuilder(),
+      //       ),
     );
   }
 }

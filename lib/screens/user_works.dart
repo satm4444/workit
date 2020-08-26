@@ -32,9 +32,12 @@ class UserWorks extends StatelessWidget {
         builder: (ctx, snapshot) {
           return snapshot.connectionState == ConnectionState.waiting
               ? Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+                  ),
                 )
               : RefreshIndicator(
+                  color: Colors.green,
                   onRefresh: () => _refreshWorks(context),
                   child: Consumer<WorkProvider>(builder: (ctx, works, _) {
                     return ListView.builder(

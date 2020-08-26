@@ -2,9 +2,9 @@ import 'package:Workit/models/work.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
+//import 'package:intl/intl.dart';
 
-//import 'package:timeago/timeago.dart' as timeago;
+import 'package:timeago/timeago.dart' as timeago;
 //import 'package:jiffy/jiffy.dart';
 
 import 'package:provider/provider.dart';
@@ -21,8 +21,8 @@ class _BigCardState extends State<BigCard> {
 
     var mediaWidth = MediaQuery.of(context).size.width;
 
-    //  final now = new DateTime.now();
-    //  final difference = now.difference(fromModel.dateTime);
+    final now = new DateTime.now();
+    final difference = now.difference(fromModel.dateTime);
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, '/work_detail_screen',
@@ -88,22 +88,22 @@ class _BigCardState extends State<BigCard> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(right: 12.0),
-                        child: Text(
-                            DateFormat.yMMMMEEEEd().format(fromModel.dateTime),
-                            //Text(timeago.format(now.subtract(difference)),
-                            //timeago.format(fromModel.dateTime),
-                            //Jiffy(fromModel.dateTime).fromNow(),
+                        child:
+                            // DateFormat.yMMMMEEEEd().format(fromModel.dateTime),
+                            Text(timeago.format(now.subtract(difference)),
+                                // timeago.format(fromModel.dateTime),
+                                //Jiffy(fromModel.dateTime).fromNow(),
 
-                            style: GoogleFonts.ubuntu(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xff847676),
-                              // backgroundColor: Colors.pink.withOpacity(0.01)
-                              // color: Color(0xff847676),
-                            )
-                            // color: Colors.black.withOpacity(0.3)),
-                            ),
-                      ),
+                                style: GoogleFonts.ubuntu(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xff847676),
+                                  // backgroundColor: Colors.pink.withOpacity(0.01)
+                                  // color: Color(0xff847676),
+                                )
+                                // color: Colors.black.withOpacity(0.3)),
+                                ),
+                      )
                     ],
                   ),
                 ),
@@ -325,7 +325,7 @@ class _BigCardState extends State<BigCard> {
                                 width: 5,
                               ),
                               Text(
-                                fromModel.pay.toString(),
+                                fromModel.pay.toStringAsFixed(0),
                                 // overflow: TextOverflow.ellipsis,
 
                                 style: GoogleFonts.ubuntu(

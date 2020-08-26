@@ -2,6 +2,7 @@ import 'package:Workit/models/work.dart';
 import 'package:Workit/providers/work_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:provider/provider.dart';
@@ -123,6 +124,19 @@ class _EditscreenState extends State<Editscreen> {
       },
     );
     Navigator.pop(context);
+    showToast('Work added successfully',
+        context: context,
+        backgroundColor: Color(0xff00C484),
+        animation: StyledToastAnimation.slideFromTop,
+        reverseAnimation: StyledToastAnimation.slideToTop,
+        position: StyledToastPosition.top,
+        startOffset: Offset(0.0, -3.0),
+        reverseEndOffset: Offset(0.0, -3.0),
+        duration: Duration(seconds: 4),
+        //Animation duration   animDuration * 2 <= duration
+        animDuration: Duration(seconds: 1),
+        curve: Curves.elasticOut,
+        reverseCurve: Curves.fastOutSlowIn);
   }
 
   @override

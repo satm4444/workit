@@ -13,7 +13,7 @@ class WorkProvider with ChangeNotifier {
   WorkProvider(this._authToken, this._userId, this._items);
 
   List<Work> get items {
-    return [..._items];
+    return [..._items.reversed];
   }
 
   Work findById(String id) {
@@ -32,7 +32,7 @@ class WorkProvider with ChangeNotifier {
             "contact": work.contact,
             "location": work.location,
             "pay": work.pay,
-            "dateTime": DateTime.now().toString(),
+            "dateTime": DateTime.now().toIso8601String(),
             'creatorId': _userId,
           }));
       final newWork = Work(
@@ -73,7 +73,7 @@ class WorkProvider with ChangeNotifier {
           contact: work['contact'],
           location: work["location"],
           pay: double.parse(work['pay'].toString()),
-          dateTime: DateTime.now(),
+          dateTime: DateTime.parse(work['dateTime']),
         ));
       });
       _items = loadedWorks;

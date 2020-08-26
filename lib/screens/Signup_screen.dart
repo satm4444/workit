@@ -85,7 +85,10 @@ class _SignupScreenState extends State<SignupScreen> {
             Container(
               height: deviceSize.height,
               width: deviceSize.width,
-              child: Image.asset("assets/icons/back.jpg"),
+              child: Image.asset(
+                "assets/icons/back.jpg",
+                fit: BoxFit.cover,
+              ),
             ),
             Container(
               height: deviceSize.height,
@@ -178,7 +181,10 @@ class _SignupScreenState extends State<SignupScreen> {
                             height: 50,
                           ),
                           if (_isLoading)
-                            CircularProgressIndicator()
+                            CircularProgressIndicator(
+                              valueColor: new AlwaysStoppedAnimation<Color>(
+                                  Colors.green),
+                            )
                           else
                             Container(
                               height: deviceSize.height * 0.08,

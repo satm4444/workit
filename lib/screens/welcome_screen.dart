@@ -8,12 +8,16 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var deviceSize = MediaQuery.of(context).size;
     return Scaffold(
+      //backgroundColor: Colors.white,
       body: Stack(
         children: <Widget>[
           Container(
             height: deviceSize.height,
             width: deviceSize.width,
-            child: Image.asset("assets/icons/back.jpg"),
+            child: Image.asset(
+              "assets/icons/back.jpg",
+              fit: BoxFit.cover,
+            ),
           ),
           Container(
             height: deviceSize.height,
@@ -25,7 +29,7 @@ class WelcomeScreen extends StatelessWidget {
               Container(
                 height: deviceSize.height * 0.6,
                 width: deviceSize.width,
-                //   color: Colors.green,
+                // color: Colors.green,
                 child: Center(
                   child: RichText(
                     text: TextSpan(

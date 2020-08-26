@@ -94,7 +94,8 @@ class KaamChaDrawer extends StatelessWidget {
               ),
             ),
             onTap: () {
-              Navigator.pushNamed(context, '/user_pr_screen');
+              Navigator.pop(context);
+              Navigator.pushNamed(context, "/for_edit_work");
             },
           ),
 
@@ -113,6 +114,7 @@ class KaamChaDrawer extends StatelessWidget {
             ),
             onTap: () {
               Navigator.pop(context);
+              Navigator.pushNamed(context, "/for_edit");
             },
           ),
           //  Divider(),

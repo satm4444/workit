@@ -1,6 +1,7 @@
 import 'package:Workit/providers/work_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class CustomSearchDelegate extends SearchDelegate {
@@ -63,7 +64,15 @@ class CustomSearchDelegate extends SearchDelegate {
     return query.isEmpty
         ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[Center(child: Text('Search Work'))],
+            children: <Widget>[
+              Center(
+                  child: Text('Search Work',
+                      style: GoogleFonts.ubuntu(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.green.withGreen(99),
+                      )))
+            ],
           )
         : ListView.builder(
             itemBuilder: (ctx, index) => Column(

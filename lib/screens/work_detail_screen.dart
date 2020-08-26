@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
-//import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher.dart' as ulauncher;
 
 class WorkDetailScreen extends StatelessWidget {
 //  Future<void> _makePhoneCall(String url) async {
@@ -239,7 +239,7 @@ class WorkDetailScreen extends StatelessWidget {
                               width: 5,
                             ),
                             Text(
-                              fromProvider.pay.toString(),
+                              fromProvider.pay.toStringAsFixed(0),
                               // overflow: TextOverflow.ellipsis,
 
                               style: GoogleFonts.ubuntu(
@@ -308,8 +308,13 @@ class WorkDetailScreen extends StatelessWidget {
                       SizedBox(height: 20),
                       FlatButton.icon(
                         onPressed: () {
-                          //  _makePhoneCall('tel:$contact');
-                          // Navigator.of(context).pop();
+                          // const url = "http://google.com";
+                          // if (await ulauncher.canLaunch(url)) {
+                          //   await ulauncher.launch(url);
+                          // } else {
+                          //   throw "Could not launch $url";
+                          // }
+                          // print("cant launch");
                         },
                         icon: Icon(
                           CupertinoIcons.phone_solid,

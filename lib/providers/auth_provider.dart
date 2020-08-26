@@ -13,9 +13,13 @@ class Auth with ChangeNotifier {
   DateTime _expiryDate;
   String _userId;
   Timer _authTimer;
-
+  String useremail;
   bool get isAuth {
     return _token != null;
+  }
+
+  String get email {
+    return useremail;
   }
 
   String get token {
@@ -42,7 +46,7 @@ class Auth with ChangeNotifier {
             "password": password,
             "returnSecureToken": true,
           }));
-
+      useremail = email;
       print(json.decode(response.body));
       print(response.statusCode);
       final responseData = json.decode(response.body);
@@ -70,7 +74,6 @@ class Auth with ChangeNotifier {
         'email': email,
       });
       prefs.setString("userData", userData);
-      print(userData);
     } catch (error) {
       throw (error);
     }

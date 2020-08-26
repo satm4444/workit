@@ -1,8 +1,11 @@
 import 'package:Workit/constants.dart';
+import 'package:Workit/providers/auth_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
@@ -61,7 +64,7 @@ class ProfileScreen extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         Container(
-                          child: Image.asset("assets/icons/workprofile.png",
+                          child: Image.asset("assets/icons/teal.jpg",
                               fit: BoxFit.cover),
                           height: 198,
                           width: deviceSize.width * 0.36,
@@ -94,7 +97,7 @@ class ProfileScreen extends StatelessWidget {
                                 child: Container(
                                   child: Center(
                                       child: Text(
-                                    "12",
+                                    "0",
                                     style: GoogleFonts.ubuntu(
                                       fontSize: 38,
                                       color: Color(0xff138A9A),
@@ -121,7 +124,7 @@ class ProfileScreen extends StatelessWidget {
                                 child: Container(
                                   child: Center(
                                       child: Text(
-                                    "30",
+                                    "0",
                                     style: GoogleFonts.ubuntu(
                                       fontSize: 38,
                                       color: Color(0xff138A9A),
@@ -206,7 +209,9 @@ class ProfileScreen extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: Text(
-                                "rawalsatyam018@gmail.com",
+                                Provider.of<Auth>(context, listen: false)
+                                    .email
+                                    .toString(),
                                 style: GoogleFonts.ubuntu(
                                     fontSize: 13,
                                     fontWeight: FontWeight.w500,
@@ -235,7 +240,9 @@ class ProfileScreen extends StatelessWidget {
                                 ),
                               ),
                               minWidth: deviceSize.width * 0.55,
-                              onPressed: () {}),
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/user_works');
+                              }),
                           SizedBox(height: 20),
                           Container(
                             height: 190,
@@ -299,7 +306,28 @@ class ProfileScreen extends StatelessWidget {
                                   child: Center(
                                     child: FlatButton.icon(
                                         color: Color(0xffE30045),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          showToast('Not available now !',
+                                              backgroundColor: Colors.red,
+                                              context: context,
+                                              animation: StyledToastAnimation
+                                                  .slideFromTop,
+                                              reverseAnimation:
+                                                  StyledToastAnimation
+                                                      .slideToTop,
+                                              position: StyledToastPosition.top,
+                                              startOffset: Offset(0.0, -3.0),
+                                              reverseEndOffset:
+                                                  Offset(0.0, -3.0),
+                                              duration: Duration(seconds: 4),
+                                              //Animation duration   animDuration * 2 <= duration
+                                              animDuration:
+                                                  Duration(seconds: 1),
+                                              curve: Curves.elasticOut,
+                                              reverseCurve:
+                                                  Curves.fastOutSlowIn);
+                                          print("working");
+                                        },
                                         icon: Icon(
                                           Icons.add,
                                           color: Colors.white,
@@ -374,7 +402,14 @@ class ProfileScreen extends StatelessWidget {
                                   Expanded(
                                     child: FlatButton(
                                       padding: EdgeInsets.only(right: 33),
-                                      onPressed: () {},
+                                      onPressed: () async {
+                                        Navigator.of(context).pop();
+                                        await Provider.of<Auth>(context,
+                                                listen: false)
+                                            .logout();
+                                        Navigator.pushReplacementNamed(
+                                            context, '/welcome_screen');
+                                      },
                                       child: Text(
                                         "Logout",
                                         style: GoogleFonts.roboto(
